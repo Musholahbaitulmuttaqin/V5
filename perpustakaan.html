@@ -1,0 +1,3074 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="MBM Perpustakaan">
+    <title>Perpustakaan Digital - Baitul Muttaqin</title>
+    <meta name="description" content="Perpustakaan Digital Musholah Baitul Muttaqin: Al-Qur'an dan Hadis.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        html, body { min-height: 100%; }
+        body { margin: 0; }
+        body:not(.dark-mode) .text-slate-900 { color: #0f172a !important; }
+        body:not(.dark-mode) .text-slate-800 { color: #1e293b !important; }
+        body.dark-mode { background-color: #0f172a; color: #f1f5f9; }
+        .dark-mode .bg-white { background-color: #1e293b; border-color: #334155; }
+        .dark-mode .text-slate-900 { color: #f1f5f9; }
+        .dark-mode .text-slate-800 { color: #e2e8f0; }
+        .dark-mode .text-slate-500 { color: #94a3b8; }
+        .dark-mode .bg-slate-50 { background-color: #0f172a; }
+        .dark-mode .bg-emerald-50 { background-color: rgba(16, 185, 129, 0.1); }
+        .dark-mode .border-slate-100 { border-color: #334155; }
+        * { -webkit-tap-highlight-color: transparent; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen">
+    <div class="fixed top-0 left-0 right-0 z-[110] px-4 pt-4 pointer-events-none">
+        <button
+            type="button"
+            onclick="window.history.back()"
+            class="pointer-events-auto w-11 h-11 rounded-full bg-slate-900/80 text-white flex items-center justify-center shadow-lg backdrop-blur"
+            aria-label="Kembali">
+            <i data-lucide="arrow-left" class="w-5 h-5"></i>
+        </button>
+    </div>
+
+    <!-- POPUP KLASIFIKASI KEILMUAN -->
+<!-- POPUP KLASIFIKASI KEILMUAN -->
+<div id="perpustakaan-modal" class="fixed inset-0 z-[120] transition-all duration-300">
+
+    <!-- Background -->
+    <div
+        onclick="tutupPerpustakaanDigital()"
+        class="absolute inset-0 bg-emerald-950/95 backdrop-blur-md">
+    </div>
+
+    <!-- Konten -->
+    <div class="relative min-h-full flex items-center justify-center p-6">
+
+        <div class="w-full max-w-md bg-white dark:bg-slate-900 rounded-[2rem] shadow-2xl overflow-hidden">
+
+            <!-- Header -->
+            <div class="px-6 py-5 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                <div>
+                    <h2 class="font-black text-slate-800 dark:text-white text-lg">
+                        Perpustakaan Digital
+                    </h2>
+                    <p class="text-xs text-slate-500 mt-1">
+                        Pilih klasifikasi keilmuan
+                    </p>
+                </div>
+
+                <button
+                    onclick="tutupPerpustakaanDigital()"
+                    class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <!-- Klasifikasi -->
+            <div class="p-6 grid grid-cols-2 gap-4">
+
+                <!-- Al-Qur'an -->
+                <button
+                    onclick="pilihKlasifikasi('alquran')"
+                    class="p-5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 hover:scale-[0.98] transition text-left">
+                    <i data-lucide="book-open" class="w-7 h-7 text-emerald-600 mb-3"></i>
+                    <div class="font-black text-sm text-slate-800 dark:text-white">
+                        Al-Qur'an
+                    </div>
+                </button>
+
+                <!-- Hadis -->
+                <button
+                    onclick="pilihKlasifikasi('hadis')"
+                    class="p-5 rounded-2xl bg-blue-50 dark:bg-blue-950/40 hover:scale-[0.98] transition text-left">
+                    <i data-lucide="scroll-text" class="w-7 h-7 text-blue-600 mb-3"></i>
+                    <div class="font-black text-sm text-slate-800 dark:text-white">
+                        Hadis
+                    </div>
+                </button>
+
+                <!-- Fikih -->
+                <button
+                    onclick="pilihKlasifikasi('fikih')"
+                    class="p-5 rounded-2xl bg-amber-50 dark:bg-amber-950/40 hover:scale-[0.98] transition text-left">
+                    <i data-lucide="scale" class="w-7 h-7 text-amber-600 mb-3"></i>
+                    <div class="font-black text-sm text-slate-800 dark:text-white">
+                        Fikih
+                    </div>
+                </button>
+
+                <!-- Aqidah -->
+                <button
+                    onclick="pilihKlasifikasi('aqidah')"
+                    class="p-5 rounded-2xl bg-purple-50 dark:bg-purple-950/40 hover:scale-[0.98] transition text-left">
+                    <i data-lucide="heart" class="w-7 h-7 text-purple-600 mb-3"></i>
+                    <div class="font-black text-sm text-slate-800 dark:text-white">
+                        Aqidah
+                    </div>
+                </button>
+
+                <!-- Sirah -->
+                <button
+                    onclick="pilihKlasifikasi('sirah')"
+                    class="p-5 rounded-2xl bg-rose-50 dark:bg-rose-950/40 hover:scale-[0.98] transition text-left">
+                    <i data-lucide="landmark" class="w-7 h-7 text-rose-600 mb-3"></i>
+                    <div class="font-black text-sm text-slate-800 dark:text-white">
+                        Sirah Nabawiyah
+                    </div>
+                </button>
+
+                <!-- Akhlak -->
+                <button
+                    onclick="pilihKlasifikasi('akhlak')"
+                    class="p-5 rounded-2xl bg-teal-50 dark:bg-teal-950/40 hover:scale-[0.98] transition text-left">
+                    <i data-lucide="heart-handshake" class="w-7 h-7 text-teal-600 mb-3"></i>
+                    <div class="font-black text-sm text-slate-800 dark:text-white">
+                        Akhlak
+                    </div>
+                </button>
+
+                <!-- Tafsir -->
+                <button
+                    onclick="pilihKlasifikasi('tafsir')"
+                    class="p-5 rounded-2xl bg-indigo-50 dark:bg-indigo-950/40 hover:scale-[0.98] transition text-left">
+                    <i data-lucide="book-marked" class="w-7 h-7 text-indigo-600 mb-3"></i>
+                    <div class="font-black text-sm text-slate-800 dark:text-white">
+                        Tafsir
+                    </div>
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- HALAMAN HADIS -->
+<div id="hadis-modal" class="fixed inset-0 z-[130] invisible opacity-0 transition-all duration-300 bg-slate-50">
+    <!-- Background -->
+    <div
+        onclick="tutupHalamanHadis()"
+        class="absolute inset-0 bg-slate-950/95 backdrop-blur-md">
+    </div>
+
+    <!-- Konten -->
+<div class="relative h-[100dvh] flex flex-col overflow-hidden">
+        <!-- Header -->
+        <div class="flex items-center gap-4 px-5 pt-8 pb-5 shrink-0">
+
+            <button
+                onclick="tutupHalamanHadis()"
+                class="w-11 h-11 shrink-0 rounded-full bg-white/10 text-white flex items-center justify-center">
+                <i data-lucide="arrow-left" class="w-5 h-5"></i>
+            </button>
+
+            <div>
+                <h2 class="text-white font-black text-xl">
+                    Hadis
+                </h2>
+
+                <p class="text-white/60 text-xs mt-1">
+                    Koleksi Hadis
+                </p>
+            </div>
+
+        </div>
+
+        <!-- Search -->
+<!-- Search -->
+<div class="px-5 pb-5 shrink-0">
+    <div class="relative z-[20] pointer-events-auto">
+                <i
+                    data-lucide="search"
+                    class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400">
+                </i>
+
+     <input
+    type="text"
+    id="pencarian-hadis"
+    placeholder="Cari hadis..."
+    autocomplete="off"
+    inputmode="search"
+    class="relative z-[20] w-full h-12 pl-12 pr-4 rounded-2xl bg-white text-slate-800 outline-none border-0 focus:ring-2 focus:ring-emerald-500 pointer-events-auto"
+    onclick="event.stopPropagation()"
+    onmousedown="event.stopPropagation()"
+    ontouchstart="event.stopPropagation()">
+</div>
+</div>
+        <!-- Daftar Hadis -->
+<div class="flex-1 min-h-0 overflow-y-auto overscroll-contain touch-pan-y px-5 pb-24">
+            <div id="daftar-hadis" class="space-y-3">
+
+                <!-- Data sementara -->
+         
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<!-- HALAMAN AL-QURAN -->
+<div
+    id="alquran-modal"
+    class="fixed inset-0 z-[130] invisible opacity-0 transition-all duration-300 bg-[#062e2b]">
+    <!-- Background -->
+    <div
+        onclick="tutupHalamanAlQuran()"
+        class="absolute inset-0 bg-slate-950/95 backdrop-blur-md">
+    </div>
+
+    <!-- Konten -->
+    <div class="relative h-[100dvh] flex flex-col overflow-hidden bg-gradient-to-b from-[#062e2b] via-[#073b36] to-[#041f1d]">
+        <!-- Header -->
+        <div class="flex items-center gap-4 px-5 pt-8 pb-5 shrink-0">
+
+            <button
+                onclick="tutupHalamanAlQuran()"
+                class="w-11 h-11 shrink-0 rounded-full bg-white/10 text-white flex items-center justify-center">
+                <i data-lucide="arrow-left" class="w-5 h-5"></i>
+            </button>
+
+            <div>
+                <h2 class="text-white font-black text-xl">
+                    Al-Qur'an
+                </h2>
+
+                <p class="text-white/60 text-xs mt-1">
+                    Daftar Surat
+                </p>
+            </div>
+
+        </div>
+
+        <!-- Daftar Surat -->
+        <div class="flex-1 min-h-0 overflow-y-auto overscroll-contain px-5 pb-24">
+<!-- PILIHAN TAMPILAN -->
+<div class="px-5 pt-2 pb-4 shrink-0">
+    <div class="flex gap-2 p-1 rounded-2xl bg-white/10">
+        <button
+            type="button"
+            id="tab-alquran-surat"
+            onclick="pilihTampilanAlQuran('surat')"
+            class="flex-1 px-4 py-3 rounded-xl bg-emerald-600 text-white text-xs font-black">
+            Surat
+        </button>
+
+        <button
+            type="button"
+            id="tab-alquran-juz"
+            onclick="pilihTampilanAlQuran('juz')"
+            class="flex-1 px-4 py-3 rounded-xl text-white/60 text-xs font-black">
+            Juz
+        </button>
+
+        <button
+    type="button"
+    id="tab-alquran-murotal"
+    onclick="pilihTampilanAlQuran('murotal')"
+    class="flex-1 px-4 py-3 rounded-xl text-white/60 text-xs font-black">
+    Murotal
+</button>
+
+    </div>
+</div>
+<div id="pencarian-surah-wrapper" class="mb-4">
+    <div class="relative">
+        <i
+            data-lucide="search"
+            class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400">
+        </i>
+
+        <input
+            type="text"
+            id="pencarian-surah"
+            oninput="cariSuratQuran(this.value)"
+            placeholder="Cari surat..."
+            autocomplete="off"
+            class="w-full pl-12 pr-4 py-4 rounded-2xl bg-white border border-slate-100 shadow-sm text-sm font-bold text-slate-800 outline-none focus:border-emerald-500">
+    </div>
+
+    <div
+        id="rekomendasi-surah"
+        class="mt-2 space-y-2">
+    </div>
+</div>
+
+<div
+    class="..."
+>
+            <div id="daftar-surah" class="space-y-3">
+
+                <div class="text-center py-10">
+                    <div class="inline-block w-7 h-7 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
+
+                    <p class="text-white/50 text-xs mt-3">
+                        Memuat daftar surat...
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<!-- DETAIL AL-QURAN -->
+<div
+    id="alquran-detail-modal"
+    class="fixed inset-0 z-[140] invisible opacity-0 transition-all duration-300">
+
+    <!-- Background -->
+    <div
+        onclick="tutupDetailAlQuran()"
+        class="absolute inset-0 bg-slate-950/95 backdrop-blur-md">
+    </div>
+
+    <!-- Konten -->
+<div class="relative h-[100dvh] flex flex-col overflow-hidden overscroll-none bg-gradient-to-b from-[#062e2b] via-[#073b36] to-[#041f1d]">
+        <!-- Header -->
+        <div class="flex items-center gap-4 px-5 pt-8 pb-5 shrink-0">
+
+            <button
+                type="button"
+                onclick="tutupDetailAlQuran()"
+                class="w-11 h-11 shrink-0 rounded-full bg-white/10 text-white flex items-center justify-center">
+
+                <i
+                    data-lucide="arrow-left"
+                    class="w-5 h-5">
+                </i>
+
+            </button>
+
+            <div>
+                <h2 class="text-white font-black text-xl">
+                    Al-Qur'an
+                </h2>
+
+                <p class="text-white/60 text-xs mt-1">
+                    Detail Surat
+                </p>
+            </div>
+
+        </div>
+
+        <!-- Isi Surat -->
+<div
+    id="isi-detail-surah"
+    class="flex-1 min-h-0 overflow-y-auto overscroll-none px-0 pb-24 pt-2"
+    style="-webkit-overflow-scrolling: touch; overscroll-behavior-y: none;">
+</div>
+
+    </div>
+
+</div>
+<!-- DETAIL HADIS -->
+<div id="detail-hadis-modal"
+     class="fixed inset-0 z-[140] invisible opacity-0 transition-all duration-300">
+
+    <!-- Background -->
+    <div
+        onclick="tutupDetailHadis()"
+        class="absolute inset-0 bg-slate-950/95 backdrop-blur-md">
+    </div>
+
+    <!-- Konten -->
+<div class="relative h-[100dvh] flex flex-col overflow-hidden bg-slate-950">
+        <!-- Header -->
+        <div class="flex items-center gap-4 px-5 pt-8 pb-5 shrink-0">
+
+            <button
+                onclick="tutupDetailHadis()"
+                class="w-11 h-11 shrink-0 rounded-full bg-white/10 text-white flex items-center justify-center">
+                <i data-lucide="arrow-left" class="w-5 h-5"></i>
+            </button>
+
+            <div>
+                <h2 class="text-white font-black text-xl">
+                    Detail Hadis
+                </h2>
+
+                <p
+                    id="detail-hadis-id"
+                    class="text-white/60 text-xs mt-1">
+                    Memuat...
+                </p>
+            </div>
+
+        </div>
+
+        <!-- Isi Detail -->
+        <div
+            
+    id="isi-detail-hadis"
+    class="flex-1 min-h-0 overflow-y-auto overscroll-contain px-4 pb-24 pt-2"
+    style="-webkit-overflow-scrolling: touch;">
+            <div class="text-center py-10">
+                <div class="inline-block w-7 h-7 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
+
+                <p class="text-white/50 text-xs mt-3">
+                    Memuat hadis...
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<script>
+function bukaPerpustakaanDigital() {
+    const modal = document.getElementById('perpustakaan-modal');
+
+    if (modal) {
+        modal.classList.remove('invisible', 'opacity-0');
+        document.body.style.overflow = 'hidden';
+        lucide.createIcons();
+    }
+}
+function tutupPerpustakaanDigital() {
+    window.history.back();
+}
+
+function pilihKlasifikasi(kategori) {
+
+    const perpustakaan = document.getElementById(
+        'perpustakaan-modal'
+    );
+
+    if (kategori === 'alquran') {
+
+        if (perpustakaan) {
+            perpustakaan.classList.add(
+                'invisible',
+                'opacity-0'
+            );
+        }
+
+        document.body.style.overflow = 'hidden';
+
+        history.pushState(
+            { halaman: 'alquran' },
+            '',
+            window.location.href
+        );
+
+        bukaHalamanAlQuran();
+        return;
+    }
+
+    if (kategori === 'hadis') {
+
+        if (perpustakaan) {
+            perpustakaan.classList.add(
+                'invisible',
+                'opacity-0'
+            );
+        }
+
+        document.body.style.overflow = 'hidden';
+
+        history.pushState(
+            { halaman: 'hadis' },
+            '',
+            window.location.href
+        );
+
+        bukaHalamanHadis();
+        return;
+    }
+
+    alert('Kategori: ' + kategori);
+}
+function bukaHalamanHadis() {
+    const modal = document.getElementById('hadis-modal');
+halamanHadis = 1;
+    if (modal) {
+        modal.classList.remove('invisible', 'opacity-0');
+        document.body.style.overflow = 'hidden';
+        lucide.createIcons();
+
+        muatDaftarHadis();
+    }
+}
+function tutupHalamanHadis() {
+
+    const modal = document.getElementById(
+        'hadis-modal'
+    );
+
+    if (modal) {
+        modal.classList.add(
+            'invisible',
+            'opacity-0'
+        );
+    }
+
+    document.body.style.overflow = 'hidden';
+
+    window.history.back();
+}
+// ===============================
+// AL-QUR'AN
+// ===============================
+
+function bukaHalamanAlQuran() {
+    const modal = document.getElementById('alquran-modal');
+
+    if (!modal) {
+        alert('alquran-modal tidak ditemukan');
+        return;
+    }
+
+    modal.classList.remove('invisible', 'opacity-0');
+    document.body.style.overflow = 'hidden';
+    lucide.createIcons();
+
+    // Tampilkan daftar sesuai tab yang terakhir dipilih
+    pilihTampilanAlQuran(tampilanAlQuran);
+}
+
+
+function tutupHalamanAlQuran() {
+
+    const modal = document.getElementById(
+        'alquran-modal'
+    );
+
+    if (modal) {
+        modal.classList.add(
+            'invisible',
+            'opacity-0'
+        );
+    }
+
+    document.body.style.overflow = 'hidden';
+
+    window.history.back();
+}
+
+
+async function muatDaftarSurah() {
+
+    const container = document.getElementById('daftar-surah');
+
+    if (!container) return;
+
+    container.innerHTML = `
+        <div class="text-center py-10">
+            <div class="inline-block w-7 h-7 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
+
+            <p class="text-white/50 text-xs mt-3">
+                Memuat daftar surat...
+            </p>
+        </div>
+    `;
+
+    try {
+
+        const response = await fetch(
+    'https://api.myquran.com/v3/quran',
+    {
+        headers: {
+            'Accept': 'application/json'
+        }
+    }
+);
+
+if (!response.ok) {
+    throw new Error('Gagal mengambil daftar surat');
+}
+
+const result = await response.json();
+
+if (!result.status || !Array.isArray(result.data)) {
+    throw new Error(
+        result.message || 'Data surat tidak ditemukan'
+    );
+}
+
+const hasil = result.data;
+
+daftarSuratQuran = hasil;
+
+container.innerHTML = hasil.map(function (surah) {
+
+    const audioUrl = surah.audio_url || '';
+
+    return `
+        <div
+            class="relative w-full bg-white rounded-3xl p-5 mb-4 shadow-lg overflow-hidden">
+
+            <!-- Ornamen -->
+            <div class="absolute -top-8 -left-8 w-20 h-20 border-2 border-emerald-100 rotate-45 opacity-70"></div>
+
+            <div class="absolute -bottom-8 -right-8 w-20 h-20 border-2 border-emerald-100 rotate-45 opacity-70"></div>
+
+            <!-- Informasi Surat -->
+            <div class="relative flex items-center gap-4">
+
+                <!-- Nomor -->
+                <div
+                    class="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-700
+                           flex items-center justify-center font-black text-sm shrink-0">
+                    ${surah.number}
+                </div>
+
+                <!-- Nama -->
+                <div
+                    class="flex-1 min-w-0 cursor-pointer"
+                    onclick="bukaDetailSurah(${surah.number})">
+
+                    <h3 class="text-slate-800 font-black text-base">
+                        ${surah.name_latin}
+                    </h3>
+
+                    <p class="text-slate-400 text-[10px] font-bold mt-1">
+                        ${surah.translation}
+                    </p>
+
+                    <div class="flex items-center gap-2 mt-2">
+
+                        <span
+                            class="text-[9px] font-black uppercase tracking-wider text-emerald-600">
+                            ${surah.number_of_ayahs} Ayat
+                        </span>
+
+                        <span class="text-slate-300">•</span>
+
+                        <span
+                            class="text-[9px] font-black uppercase tracking-wider text-slate-400">
+                            ${surah.revelation}
+                        </span>
+
+                    </div>
+                </div>
+
+                <!-- Tombol Detail -->
+                <button
+                    type="button"
+                    onclick="bukaDetailSurah(${surah.number})"
+                    class="w-10 h-10 rounded-xl bg-slate-50
+                           flex items-center justify-center shrink-0">
+
+                    <i
+                        data-lucide="chevron-right"
+                        class="w-5 h-5 text-slate-400">
+                    </i>
+
+                </button>
+
+            </div>
+
+            
+        </div>
+    `;
+
+}).join('');
+        lucide.createIcons();
+kontrolAudioSurah();
+
+    } catch (error) {
+
+        console.error(
+            'Gagal memuat daftar surat:',
+            error
+        );
+
+        container.innerHTML = `
+            <div class="text-center py-10">
+
+                <i
+                    data-lucide="wifi-off"
+                    class="w-8 h-8 text-white/40 mx-auto">
+                </i>
+
+                <p class="text-white/60 text-sm mt-3">
+                    Gagal memuat daftar surat
+                </p>
+
+                <button
+                    type="button"
+                    onclick="muatDaftarSurah()"
+                    class="mt-4 px-5 py-3 rounded-xl bg-emerald-600 text-white text-xs font-black">
+                    Coba Lagi
+                </button>
+
+            </div>
+        `;
+
+        lucide.createIcons();
+    }
+}
+function kontrolAudioSurah() {
+    const semuaAudio = document.querySelectorAll(
+        '#daftar-surah audio'
+    );
+
+    semuaAudio.forEach(function (audio) {
+
+        audio.addEventListener('play', function () {
+
+            semuaAudio.forEach(function (audioLain) {
+
+                if (audioLain !== audio) {
+                    audioLain.pause();
+                    audioLain.currentTime = 0;
+                }
+
+            });
+
+        });
+
+    });
+}
+function cariSuratQuran(keyword) {
+
+    const rekomendasi = document.getElementById('rekomendasi-surah');
+
+    if (!rekomendasi) return;
+
+    keyword = keyword.trim().toLowerCase();
+
+    if (!keyword) {
+        rekomendasi.innerHTML = '';
+        return;
+    }
+
+    const hasil = daftarSuratQuran.filter(function (surah) {
+
+        return (
+            String(surah.number) === keyword ||
+            surah.name_latin.toLowerCase().includes(keyword) ||
+            surah.translation.toLowerCase().includes(keyword)
+        );
+
+    }).slice(0, 6);
+
+    if (!hasil.length) {
+        rekomendasi.innerHTML = `
+            <div class="bg-white rounded-2xl p-4 text-sm text-slate-400 font-bold">
+                Surat tidak ditemukan
+            </div>
+        `;
+        return;
+    }
+
+    rekomendasi.innerHTML = hasil.map(function (surah) {
+
+        return `
+            <button
+                type="button"
+                onclick="bukaDetailSurah(${surah.number})"
+                class="w-full text-left bg-white rounded-2xl p-4 shadow-sm flex items-center gap-3 active:scale-[0.98] transition">
+
+                <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center font-black text-sm">
+                    ${surah.number}
+                </div>
+
+                <div class="flex-1">
+                    <div class="text-slate-800 font-black text-sm">
+                        ${surah.name_latin}
+                    </div>
+
+                    <div class="text-slate-400 text-xs mt-1">
+                        ${surah.translation} • ${surah.number_of_ayahs} Ayat
+                    </div>
+                </div>
+
+                <i
+                    data-lucide="chevron-right"
+                    class="w-5 h-5 text-slate-400">
+                </i>
+
+            </button>
+        `;
+
+    }).join('');
+
+    lucide.createIcons();
+}
+async function muatDaftarMurotal() {
+    try {
+        const response = await fetch(
+    'https://api.myquran.com/v3/quran'
+);
+
+        const hasil = await response.json();
+
+        console.log('Data murotal:', hasil);
+console.log('Jumlah surat:', hasil.data.length);
+const container = document.getElementById('daftar-surah');
+
+if (!container) return;
+
+container.innerHTML = hasil.data.map(function (surah) {
+    return `
+   <div class="bg-white rounded-2xl p-4">
+        <div class="font-bold text-slate-800 mb-2">
+            ${surah.number}. ${surah.name_latin}
+        </div>
+
+        <div class="relative">
+            
+
+            <div
+                class="relative mt-4 p-3 rounded-2xl bg-emerald-50 border border-emerald-100">
+
+                <div class="flex items-center gap-3">
+
+                    <button
+                        type="button"
+                        id="tombol-murotal-${surah.number}"
+                        onclick="putarMurotal('${surah.audio_url}', ${surah.number})"
+                        class="w-11 h-11 rounded-full bg-emerald-600 text-white
+                               flex items-center justify-center shrink-0">
+
+                        <i
+                            data-lucide="play"
+                            class="w-5 h-5 fill-current">
+                        </i>
+
+                    </button>
+
+                    <div class="flex-1 min-w-0">
+
+                        <div class="flex items-center justify-between mb-2">
+
+                            <span class="text-xs font-black text-emerald-900">
+                                ${surah.name_latin}
+                            </span>
+
+                            <span
+    id="waktu-murotal-${surah.number}"
+    class="text-[10px] font-bold text-emerald-700">
+    00:00
+</span>
+                        </div>
+
+                        <div class="w-full h-1.5 bg-emerald-200 rounded-full overflow-hidden">
+
+                            <div
+    id="progress-murotal-${surah.number}"
+    class="h-full bg-emerald-600 rounded-full"
+    style="width: 0%">
+</div>
+
+                        </div>
+
+                    </div>
+
+          <a
+    href="${surah.audio_url}"
+    download
+    target="_blank"
+    rel="noopener"
+    class="w-9 h-9 rounded-xl bg-white text-emerald-700
+           flex items-center justify-center shrink-0 shadow-sm">
+
+    <i
+        data-lucide="download"
+        class="w-4 h-4">
+    </i>
+
+</a>
+
+                </div>
+
+            </div>
+
+            
+        </div>
+
+    </div>
+`;
+}).join('');
+lucide.createIcons();
+// Sinkronkan ikon dengan audio yang masih berjalan
+sinkronkanTombolMurotal();
+    } catch (error) {
+        console.error('Gagal memuat murotal:', error);
+    }
+}
+function pilihTampilanAlQuran(tampilan) {
+    const tabSurat = document.getElementById('tab-alquran-surat');
+    const tabJuz = document.getElementById('tab-alquran-juz');
+const tabMurotal = document.getElementById('tab-alquran-murotal');
+
+    if (tampilan === 'surat') {
+
+    const pencarianSurah = document.getElementById(
+        'pencarian-surah-wrapper'
+    );
+
+    if (pencarianSurah) {
+        pencarianSurah.classList.remove('hidden');
+    }
+
+    tabSurat.classList.add('bg-emerald-600', 'text-white');
+        tabSurat.classList.remove('text-white/60');
+tabMurotal.classList.remove('bg-emerald-600', 'text-white');
+tabMurotal.classList.add('text-white/60');
+
+        tabJuz.classList.remove('bg-emerald-600', 'text-white');
+        tabJuz.classList.add('text-white/60');
+tabMurotal.classList.remove('bg-emerald-600', 'text-white');
+tabMurotal.classList.add('text-white/60');
+
+        muatDaftarSurah();
+    }
+if (tampilan === 'juz') {
+
+    const pencarianSurah = document.getElementById(
+        'pencarian-surah-wrapper'
+    );
+
+    if (pencarianSurah) {
+        pencarianSurah.classList.add('hidden');
+    }
+
+    tabJuz.classList.add('bg-emerald-600', 'text-white');
+    tabJuz.classList.remove('text-white/60');
+
+    tabSurat.classList.remove('bg-emerald-600', 'text-white');
+    tabSurat.classList.add('text-white/60');
+tabMurotal.classList.remove('bg-emerald-600', 'text-white');
+tabMurotal.classList.add('text-white/60');
+
+    const container = document.getElementById('daftar-surah');
+
+    if (!container) return;
+
+    container.innerHTML = Array.from(
+        { length: 30 },
+        function(_, index) {
+            const juz = index + 1;
+
+            return `
+                <button
+    type="button"
+    onclick="bukaDetailJuz(${juz})"
+    class="w-full text-left bg-white rounded-2xl p-4 shadow-sm active:scale-[0.98] transition">
+    <div class="flex items-center gap-4">
+
+                        <div class="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center font-black">
+                            ${juz}
+                        </div>
+
+                        <div>
+                            <div class="text-slate-800 font-black text-sm">
+                                Juz ${juz}
+                            </div>
+
+                            <div class="text-slate-400 text-xs mt-1">
+                                Al-Qur'an Juz ${juz}
+                            </div>
+                        </div>
+
+                    </div>
+                </button>
+            `;
+        }
+    ).join('');
+}
+if (tampilan === 'murotal') {
+    const pencarianSurah = document.getElementById(
+        'pencarian-surah-wrapper'
+    );
+
+    if (pencarianSurah) {
+        pencarianSurah.classList.add('hidden');
+    }
+
+    tabMurotal.classList.add('bg-emerald-600', 'text-white');
+    tabMurotal.classList.remove('text-white/60');
+
+    tabSurat.classList.remove('bg-emerald-600', 'text-white');
+    tabSurat.classList.add('text-white/60');
+
+    tabJuz.classList.remove('bg-emerald-600', 'text-white');
+    tabJuz.classList.add('text-white/60');
+
+    const container = document.getElementById('daftar-surah');
+
+    if (!container) return;
+
+    container.innerHTML = `
+    <div class="text-white/60 text-sm text-center py-10">
+        Memuat daftar murotal...
+    </div>
+`;
+muatDaftarMurotal();
+}
+}
+let audioMurotal = null;
+let nomorMurotalAktif = null;
+function sinkronkanTombolMurotal() {
+    if (!audioMurotal || audioMurotal.paused || nomorMurotalAktif === null) {
+        return;
+    }
+
+    const tombol = document.getElementById(
+        `tombol-murotal-${nomorMurotalAktif}`
+    );
+
+    if (!tombol) return;
+
+    tombol.innerHTML = `
+        <i
+            data-lucide="pause"
+            class="w-5 h-5 fill-current">
+        </i>
+    `;
+
+    lucide.createIcons();
+}
+function formatWaktuMurotal(detik) {
+    if (!isFinite(detik)) {
+        return '00:00';
+    }
+
+    const menit = Math.floor(detik / 60);
+    const detikSisa = Math.floor(detik % 60);
+
+    return String(menit).padStart(2, '0') + ':' +
+           String(detikSisa).padStart(2, '0');
+} 
+function putarMurotal(url, nomor) {
+    if (!url) {
+        alert('Audio tidak tersedia');
+        return;
+    }
+
+    const tombol = document.getElementById(
+        `tombol-murotal-${nomor}`
+    );
+
+    if (!audioMurotal || audioMurotal.src !== url) {
+        if (audioMurotal) {
+    audioMurotal.pause();
+
+    const tombolLama = document.getElementById(
+        `tombol-murotal-${nomorMurotalAktif}`
+    );
+
+    if (tombolLama) {
+        tombolLama.innerHTML = `
+            <i
+                data-lucide="play"
+                class="w-5 h-5 fill-current">
+            </i>
+        `;
+
+        lucide.createIcons();
+    }
+}
+
+        audioMurotal = new Audio(url);
+        nomorMurotalAktif = nomor;
+if ('mediaSession' in navigator) {
+    navigator.mediaSession.metadata = new MediaMetadata({
+        title: document
+            .querySelector(`#tombol-murotal-${nomor}`)
+            ?.closest('.bg-white')
+            ?.querySelector('.font-bold')
+            ?.textContent
+            ?.trim() || 'Murotal',
+
+        album: 'MBM App'
+    });
+}
+audioMurotal.addEventListener('loadedmetadata', function () {
+    const waktu = document.getElementById(
+        `waktu-murotal-${nomor}`
+    );
+
+    if (waktu) {
+        waktu.textContent =
+            '00:00 / ' +
+            formatWaktuMurotal(audioMurotal.duration);
+    }
+});
+
+audioMurotal.addEventListener('timeupdate', function () {
+    const waktu = document.getElementById(
+        `waktu-murotal-${nomor}`
+    );
+
+    if (waktu) {
+        waktu.textContent =
+            formatWaktuMurotal(audioMurotal.currentTime) +
+            ' / ' +
+            formatWaktuMurotal(audioMurotal.duration);
+    }
+const progress = document.getElementById(
+    `progress-murotal-${nomor}`
+);
+
+if (progress && audioMurotal.duration) {
+    const persen =
+        (audioMurotal.currentTime / audioMurotal.duration) * 100;
+
+    progress.style.width = persen + '%';
+}
+});
+    }
+
+    if (audioMurotal.paused) {
+
+        audioMurotal.play().then(function () {
+
+            if (tombol) {
+                tombol.innerHTML = `
+                    <i
+                        data-lucide="pause"
+                        class="w-5 h-5 fill-current">
+                    </i>
+                `;
+
+                lucide.createIcons();
+            }
+
+        }).catch(function (error) {
+            console.error('Audio gagal diputar:', error);
+        });
+
+    } else {
+
+        audioMurotal.pause();
+
+        if (tombol) {
+            tombol.innerHTML = `
+                <i
+                    data-lucide="play"
+                    class="w-5 h-5 fill-current">
+                </i>
+            `;
+
+            lucide.createIcons();
+        }
+    }
+}
+// ===============================
+// CACHE AL-QUR'AN 30 HARI
+// ===============================
+
+const CACHE_ALQURAN_MS = 30 * 24 * 60 * 60 * 1000;
+
+function ambilCacheAlQuran(kunci) {
+    try {
+        const raw = localStorage.getItem(kunci);
+
+        if (!raw) return null;
+
+        const cache = JSON.parse(raw);
+
+        if (!cache || !cache.waktu || !cache.data) {
+            localStorage.removeItem(kunci);
+            return null;
+        }
+
+        // Cache sudah lebih dari 30 hari
+        if (Date.now() - cache.waktu >= CACHE_ALQURAN_MS) {
+            localStorage.removeItem(kunci);
+            return null;
+        }
+
+        return cache.data;
+
+    } catch (error) {
+        console.warn('Cache Al-Qur’an tidak dapat dibaca:', error);
+        return null;
+    }
+}
+
+function simpanCacheAlQuran(kunci, data) {
+    try {
+        localStorage.setItem(
+            kunci,
+            JSON.stringify({
+                waktu: Date.now(),
+                data: data
+            })
+        );
+
+    } catch (error) {
+        // Kalau storage penuh, website tetap berjalan normal
+        console.warn('Cache Al-Qur’an tidak dapat disimpan:', error);
+    }
+}
+
+async function bukaDetailJuz(nomorJuz) {
+    const modal = document.getElementById('alquran-detail-modal');
+    const container = document.getElementById('isi-detail-surah');
+
+    if (!modal || !container) {
+        alert('Modal detail Al-Qur’an tidak ditemukan');
+        return;
+    }
+history.pushState(
+    { halaman: 'alquran-detail' },
+    '',
+    window.location.href
+);
+
+    modal.classList.remove('invisible', 'opacity-0');
+    document.body.style.overflow = 'hidden';
+container.scrollTop = 0;
+
+    container.innerHTML = `
+        <div class="text-center py-10">
+            <div class="inline-block w-7 h-7 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
+            <p class="text-white/50 text-xs mt-3">
+                Memuat Juz ${nomorJuz}...
+            </p>
+        </div>
+    `;
+try {
+
+    const kunciCache = 'baitulmuttaqin_quran_v1_juz_' + nomorJuz;
+
+    // ===============================
+    // CEK CACHE DULU
+    // ===============================
+
+    let ayat = ambilCacheAlQuran(kunciCache);
+
+    if (ayat) {
+
+        console.log('Juz ' + nomorJuz + ' menggunakan cache.');
+
+    } else {
+
+        // ===============================
+        // CACHE KOSONG / SUDAH EXPIRED
+        // AMBIL DARI API
+        // ===============================
+
+        let semuaAyat = [];
+        let halaman = 1;
+        let totalAyat = 0;
+
+        do {
+
+            const response = await fetch(
+                'https://api.myquran.com/v3/quran/juz/' +
+                nomorJuz +
+                '?page=' +
+                halaman +
+                '&limit=10',
+                {
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                }
+            );
+
+            const result = await response.json();
+
+            if (!response.ok || !result.status || !result.data) {
+                throw new Error(
+                    result.message || 'Data Juz tidak ditemukan'
+                );
+            }
+
+            const ayatHalaman = Array.isArray(result.data)
+                ? result.data
+                : result.data.ayahs || [];
+
+            semuaAyat = semuaAyat.concat(ayatHalaman);
+
+            totalAyat =
+                result.pagination?.total ||
+                semuaAyat.length;
+
+            halaman++;
+
+            if (ayatHalaman.length === 0) {
+                break;
+            }
+
+        } while (semuaAyat.length < totalAyat);
+
+        ayat = semuaAyat;
+
+        
+        // ===============================
+        // SIMPAN CACHE 30 HARI
+        // ===============================
+
+        simpanCacheAlQuran(kunciCache, ayat);
+
+        console.log('Juz ' + nomorJuz + ' disimpan ke cache.');
+    }
+
+        if (!ayat.length) {
+            throw new Error('Data ayat Juz kosong');
+        }
+
+        let isiJuz = '';
+
+        ayat.forEach(function(item, index) {
+
+            const suratSebelumnya =
+                index > 0
+                    ? ayat[index - 1].surah_number
+                    : null;
+
+            const suratBaru =
+                index === 0 ||
+                item.surah_number !== suratSebelumnya;
+
+            const namaSurat =
+                item.surah?.name_latin || '';
+
+            
+
+            if (suratBaru) {
+
+                isiJuz += `
+                    <div
+                        dir="ltr"
+                        class="pt-6 pb-5 text-center w-full">
+
+                        <div class="text-slate-800 text-lg font-black text-center">
+    ${namaSurat}
+</div>
+
+
+
+                        <div
+                            class="text-slate-400 text-[10px] mt-1">
+                            Surat ${item.surah_number}
+                        </div>
+
+                        ${
+                            item.surah_number !== 1 &&
+                            item.surah_number !== 9 &&
+                            item.ayah_number === 1
+                                ? `
+                                    <div
+                                        dir="rtl"
+                                        class="w-full text-center mt-2 mb-2
+                                               text-[21px] leading-[1.6]
+                                               text-slate-800 font-serif">
+                                        بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+                                    </div>
+                                `
+                                : ''
+                        }
+
+                    </div>
+                `;
+            }
+
+            isiJuz += `
+                <div
+                    dir="rtl"
+                    class="w-full text-justify text-[21px]
+                           text-slate-800 font-serif leading-[2.2]">
+
+                    ${item.arab}
+
+                    <span
+                        class="inline-flex items-center justify-center
+                               align-middle mx-1
+                               w-7 h-7 rounded-full
+                               border border-emerald-600
+                               text-[11px] text-emerald-700
+                               font-sans font-bold leading-none">
+                        ${item.ayah_number}
+                    </span>
+
+                </div>
+            `;
+        });
+
+        container.innerHTML = `
+            <div class="bg-white w-full px-4 py-5">
+
+                <div class="text-center mb-5">
+                    <div
+                        class="text-emerald-700 text-xs font-black
+                               uppercase tracking-wider">
+                        Al-Qur'an
+                    </div>
+
+                    <h3
+                        class="text-slate-800 text-2xl font-black mt-1">
+                        Juz ${nomorJuz}
+                    </h3>
+                </div>
+
+                <div
+                    dir="rtl"
+                    class="w-full"
+                    style="
+                        background-image:
+                            repeating-linear-gradient(
+                                to bottom,
+                                transparent 0,
+                                transparent calc(2.2em - 1px),
+                                #d1fae5 calc(2.2em - 1px),
+                                #d1fae5 2.2em
+                            );
+                    ">
+
+                    ${isiJuz}
+
+                </div>
+${
+    nomorJuz > 1 || nomorJuz < 30
+        ? `
+            <div class="px-0 pt-8 pb-3 grid grid-cols-2 gap-3">
+
+                ${
+                    nomorJuz > 1
+                        ? `
+                            <button
+                                type="button"
+                                onclick="bukaDetailJuz(${nomorJuz - 1})"
+                                class="py-4 rounded-2xl
+                                       bg-slate-100 text-slate-700
+                                       font-black text-xs shadow-sm
+                                       active:scale-[0.97] transition
+                                       flex items-center justify-center gap-2">
+
+                                <i
+                                    data-lucide="arrow-left"
+                                    class="w-4 h-4">
+                                </i>
+
+                                <span>
+                                    Juz ${nomorJuz - 1}
+                                </span>
+
+                            </button>
+                        `
+                        : `
+                            <div></div>
+                        `
+                }
+
+                ${
+                    nomorJuz < 30
+                        ? `
+                            <button
+                                type="button"
+                                onclick="bukaDetailJuz(${nomorJuz + 1})"
+                                class="py-4 rounded-2xl
+                                       bg-emerald-600 text-white
+                                       font-black text-xs shadow-lg
+                                       active:scale-[0.97] transition
+                                       flex items-center justify-center gap-2">
+
+                                <span>
+                                    Juz ${nomorJuz + 1}
+                                </span>
+
+                                <i
+                                    data-lucide="arrow-right"
+                                    class="w-4 h-4">
+                                </i>
+
+                            </button>
+                        `
+                        : `
+                            <div></div>
+                        `
+                }
+
+            </div>
+        `
+        : ''
+}
+            </div>
+        `;
+
+        lucide.createIcons();
+
+    } catch (error) {
+
+        console.error('Gagal memuat Juz:', error);
+
+        container.innerHTML = `
+            <div class="text-center py-10 px-5">
+                <p class="text-red-400 font-bold">
+                    Gagal memuat Juz ${nomorJuz}.
+                </p>
+
+                <p class="text-slate-500 text-xs mt-2">
+                    ${error.message || 'Terjadi kesalahan.'}
+                </p>
+            </div>
+        `;
+    }
+}
+async function bukaDetailSurah(nomor) {
+
+    const modal = document.getElementById('alquran-detail-modal');
+    const container = document.getElementById('isi-detail-surah');
+
+    if (!modal || !container) {
+        alert('Modal detail tidak ditemukan');
+        return;
+    }
+history.pushState(
+    { halaman: 'alquran-detail' },
+    '',
+    window.location.href
+);
+    modal.classList.remove('invisible', 'opacity-0');
+
+document.body.style.overflow = 'hidden';
+
+// Pastikan setiap surat baru selalu mulai dari ayat 1
+container.scrollTop = 0;
+
+container.innerHTML = `
+        <div class="text-center py-10">
+            <div class="inline-block w-7 h-7 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
+            <p class="text-white/50 text-xs mt-3">
+                Memuat seluruh surat...
+            </p>
+        </div>
+    `;
+
+ try {
+
+        const kunciCache =
+            'baitulmuttaqin_quran_v1_surat_' + nomor;
+
+        window.dataTafsirAyat = {};
+
+        let infoSurah = null;
+        let semuaAyat = ambilCacheAlQuran(kunciCache);
+
+        // ===============================
+        // CACHE DITEMUKAN
+        // ===============================
+
+        if (semuaAyat) {
+
+            console.log('Surat ' + nomor + ' menggunakan cache.');
+
+            if (semuaAyat.infoSurah) {
+                infoSurah = semuaAyat.infoSurah;
+                semuaAyat = semuaAyat.ayahs || [];
+            }
+
+        } else {
+
+            // ===============================
+            // CACHE KOSONG / EXPIRED
+            // AMBIL DARI API
+            // ===============================
+
+            semuaAyat = [];
+
+            let halaman = 1;
+            let totalAyat = 0;
+
+            do {
+
+                const url =
+                    'https://api.myquran.com/v3/quran/' +
+                    nomor +
+                    '?page=' +
+                    halaman +
+                    '&limit=10';
+
+                const response = await fetch(url, {
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                const result = await response.json();
+
+                if (!response.ok || !result.status || !result.data) {
+                    throw new Error(
+                        result.message || 'Data surat tidak ditemukan'
+                    );
+                }
+
+                if (!infoSurah) {
+                    infoSurah = result.data;
+                }
+
+                const ayatHalaman =
+                    result.data.ayahs || [];
+
+                semuaAyat =
+                    semuaAyat.concat(ayatHalaman);
+
+                totalAyat =
+                    result.pagination?.total ||
+                    result.data.number_of_ayahs ||
+                    0;
+
+                halaman++;
+
+            } while (semuaAyat.length < totalAyat);
+
+            if (!semuaAyat.length) {
+                throw new Error('Data ayat surat kosong');
+            }
+
+            // ===============================
+            // SIMPAN DATA SURAT + TAFSIR
+            // ===============================
+
+            simpanCacheAlQuran(
+                kunciCache,
+                {
+                    infoSurah: infoSurah,
+                    ayahs: semuaAyat
+                }
+            );
+
+            console.log('Surat ' + nomor + ' disimpan ke cache.');
+        }
+
+        // ===============================
+        // BANGUN DATA TAFSIR
+        // ===============================
+
+        semuaAyat.forEach(function(ayah) {
+
+            if (ayah.tafsir?.kemenag) {
+
+                window.dataTafsirAyat[ayah.ayah_number] = {
+                    surah: nomor,
+                    short: ayah.tafsir.kemenag.short || '',
+                    long: ayah.tafsir.kemenag.long || ''
+                };
+
+            }
+
+        });
+
+        const surah = {
+    ...infoSurah,
+    ayahs: semuaAyat
+};
+
+// Reset posisi ke awal setiap membuka surat baru
+container.scrollTop = 0;
+
+container.innerHTML = `
+            <div class="bg-white rounded-3xl p-6 shadow-xl">
+<div class="relative text-center">
+
+    <!-- Tombol navigasi khusus mode Surat -->
+    <div class="absolute right-0 top-0 flex flex-col gap-2">
+
+        
+
+        <button
+            type="button"
+            onclick="cariAyatSurat()"
+            title="Menuju ayat"
+            class="w-9 h-9 rounded-full bg-emerald-600 text-white shadow-md flex items-center justify-center active:scale-90 transition">
+            <i data-lucide="search" class="w-4 h-4"></i>
+        </button>
+
+        <button
+            type="button"
+            id="tombol-auto-scroll"
+            onclick="toggleAutoScrollSurat()"
+            title="Gulir otomatis"
+            class="w-9 h-9 rounded-full bg-slate-900 text-white shadow-md flex items-center justify-center active:scale-90 transition">
+            <i data-lucide="chevrons-down" class="w-4 h-4"></i>
+        </button>
+
+    </div>
+
+    <div class="text-emerald-600 text-xs font-black uppercase tracking-wider">
+        Surat ${surah.number}
+    </div>
+
+                    
+                    <div
+                        dir="rtl"
+                        class="text-slate-700 text-3xl font-bold mt-4">
+                        ${surah.name}
+                    </div>
+
+                    <p class="text-slate-400 text-xs font-bold mt-3">
+    ${surah.translation}
+    • ${surah.number_of_ayahs} Ayat
+    • ${surah.revelation}
+</p>
+
+${
+    surah.description
+        ? `
+            <button
+                type="button"
+                onclick="togglePembukaSurat()"
+                class="mt-5 w-full text-left px-4 py-3 rounded-2xl bg-emerald-50 text-emerald-700 text-xs font-black">
+                📖 Lihat Pembuka Surat
+            </button>
+
+            <div
+                id="pembuka-surat"
+                class="hidden mt-3 text-left bg-emerald-50 rounded-2xl p-4">
+
+                <div class="text-emerald-700 text-xs font-black uppercase tracking-wider mb-2">
+                    Pembuka Surat
+                </div>
+
+                <p class="text-slate-600 text-sm leading-7">
+                    ${surah.description}
+                </p>
+
+            </div>
+        `
+        : ''
+}
+                </div>
+<div class="mt-5 flex gap-2">
+
+    <button
+        type="button"
+        onclick="ubahModeBacaan('arab')"
+        class="flex-1 px-3 py-3 rounded-2xl bg-slate-100 text-slate-700 text-xs font-black">
+        Arab Saja
+    </button>
+
+    <button
+        type="button"
+        onclick="ubahModeBacaan('lengkap')"
+        class="flex-1 px-3 py-3 rounded-2xl bg-emerald-600 text-white text-xs font-black">
+        Arab + Arti
+    </button>
+
+</div>
+                <div class="h-px bg-slate-100 my-6"></div>
+
+                <div class="space-y-5">
+
+                    ${surah.ayahs.map(function(ayah) {
+
+                        return `
+                            <div id="ayat-${ayah.ayah_number}" class="border-b border-slate-100 pb-5">
+
+                         <div class="flex items-center justify-between mb-3">
+
+    <span class="w-8 h-8 rounded-full bg-emerald-50 text-emerald-700 flex items-center justify-center text-xs font-black">
+        ${ayah.ayah_number}
+    </span>
+
+</div>
+
+                                <div
+                                    dir="rtl"
+                                    class="text-right text-2xl leading-[2.2] text-slate-800"
+                                    style="font-family: 'Amiri', 'Scheherazade New', serif;">
+                                    ${ayah.arab}
+                                </div>
+
+                            <p class="terjemahan-ayat text-sm leading-7 text-slate-600 mt-4">
+    ${ayah.translation}
+</p>
+
+${
+    ayah.tafsir?.kemenag
+        ? `
+            <button
+    type="button"
+    onclick="toggleTafsirAyat(${ayah.ayah_number})"
+    class="mt-3 px-3 py-2 rounded-xl bg-amber-50 text-amber-700 text-[10px] font-black">
+    Tafsir
+</button>
+${
+    ayah.audio_url
+        ? `
+            <button
+                type="button"
+                onclick="putarAudioAyat(${ayah.ayah_number})"
+                id="tombol-audio-${ayah.ayah_number}"
+                class="mt-3 ml-2 w-9 h-9 rounded-xl bg-emerald-50 text-emerald-700 inline-flex items-center justify-center active:scale-90 transition">
+
+                <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+
+            </button>
+
+            <audio
+                id="audio-ayat-${ayah.ayah_number}"
+                preload="none"
+                class="hidden">
+                <source src="${ayah.audio_url}" type="audio/mpeg">
+            </audio>
+        `
+        : ''
+}
+
+
+            <div
+                id="tafsir-ayat-${ayah.ayah_number}"
+                class="hidden mt-3 bg-amber-50 rounded-2xl p-4">
+
+                <div class="flex gap-2 mb-3">
+
+             <button
+    type="button"
+    id="tafsir-short-${ayah.ayah_number}"
+    onclick="pilihJenisTafsir(${ayah.ayah_number}, 'short')"
+    class="px-3 py-2 rounded-xl bg-amber-200 text-amber-800 text-[10px] font-black transition">
+    Singkat
+</button>
+
+<button
+    type="button"
+    id="tafsir-long-${ayah.ayah_number}"
+    onclick="pilihJenisTafsir(${ayah.ayah_number}, 'long')"
+    class="px-3 py-2 rounded-xl bg-slate-100 text-slate-600 text-[10px] font-black transition">
+    Lengkap
+</button>
+
+                </div>
+
+                <div class="text-amber-700 text-xs font-black uppercase tracking-wider mb-2">
+                    Tafsir
+                </div>
+
+                <p
+                    id="isi-tafsir-${ayah.ayah_number}"
+                    class="text-sm leading-7 text-slate-600">
+                    ${ayah.tafsir.kemenag.short || 'Tafsir tidak tersedia.'}
+                </p>
+
+            </div>
+        `
+        : ''
+}
+                            </div>
+                        `;
+                    }).join('')}
+
+                </div>
+
+                ${
+                    nomor < 114
+                        ? `
+                            <div class="px-4 pb-8 pt-2">
+                                <button
+                                    type="button"
+                                    onclick="bukaDetailSurah(${nomor + 1})"
+                                    class="w-full py-4 rounded-2xl bg-emerald-600 text-white font-black text-sm shadow-lg active:scale-[0.98] transition flex items-center justify-center gap-2">
+
+                                    <span>
+                                        Surat Berikutnya
+                                    </span>
+
+                                    <i
+                                        data-lucide="arrow-right"
+                                        class="w-5 h-5">
+                                    </i>
+
+                                </button>
+                            </div>
+                        `
+                        : `
+                            <div class="px-4 pb-8 pt-2 text-center">
+                                <p class="text-xs text-slate-400 font-bold">
+                                    Al-Qur'an telah sampai pada surat terakhir.
+                                </p>
+                            </div>
+                        `
+                }
+
+            </div>
+        `;
+
+        lucide.createIcons();
+
+    } catch (error) {
+
+        console.error(
+            'Gagal memuat detail surat:',
+            error
+        );
+
+        container.innerHTML = `
+            <div class="text-center py-10">
+
+                <i
+                    data-lucide="wifi-off"
+                    class="w-8 h-8 text-white/40 mx-auto">
+                </i>
+
+                <p class="text-white/60 text-sm mt-3">
+                    Gagal memuat surat
+                </p>
+
+                <button
+                    type="button"
+                    onclick="bukaDetailSurah(${nomor})"
+                    class="mt-4 px-5 py-3 rounded-xl bg-emerald-600 text-white text-xs font-black">
+                    Coba Lagi
+                </button>
+
+            </div>
+        `;
+
+        lucide.createIcons();
+    }
+}
+
+
+
+function cariAyatSurat() {
+    const container = document.getElementById('isi-detail-surah');
+
+    if (!container) return;
+
+    const nomorAyat = prompt('Masukkan nomor ayat:');
+
+    if (nomorAyat === null) return;
+
+    const nomor = parseInt(nomorAyat.trim(), 10);
+
+    if (!nomor || nomor < 1) {
+        alert('Nomor ayat tidak valid.');
+        return;
+    }
+
+    const target = document.getElementById('ayat-' + nomor);
+
+    if (!target) {
+        alert('Ayat ' + nomor + ' tidak ditemukan dalam surat ini.');
+        return;
+    }
+
+    const posisi =
+    target.offsetTop -
+    (container.clientHeight / 2) +
+    (target.offsetHeight / 2);
+
+    container.scrollTo({
+        top: posisi,
+        behavior: 'smooth'
+    });
+
+    target.classList.add(
+        'bg-emerald-50',
+        'rounded-2xl',
+        'px-3',
+        'py-3'
+    );
+
+    setTimeout(function() {
+        target.classList.remove(
+            'bg-emerald-50',
+            'rounded-2xl',
+            'px-3',
+            'py-3'
+        );
+    }, 1800);
+}
+
+
+let autoScrollSuratAktif = false;
+let autoScrollSuratTimer = null;
+
+
+function toggleAutoScrollSurat() {
+    const container = document.getElementById('isi-detail-surah');
+    const tombol = document.getElementById('tombol-auto-scroll');
+
+    if (!container || !tombol) return;
+
+    if (autoScrollSuratAktif) {
+
+        autoScrollSuratAktif = false;
+
+        clearInterval(autoScrollSuratTimer);
+        autoScrollSuratTimer = null;
+
+        tombol.innerHTML =
+    '<i data-lucide="chevrons-down" class="w-4 h-4"></i>';
+        lucide.createIcons();
+
+        return;
+    }
+
+    autoScrollSuratAktif = true;
+
+    tombol.innerHTML =
+        '<i data-lucide="pause" class="w-4 h-4 fill-current"></i>';
+
+    lucide.createIcons();
+
+    autoScrollSuratTimer = setInterval(function() {
+
+        if (!autoScrollSuratAktif) return;
+
+        const posisiMaksimal =
+            container.scrollHeight - container.clientHeight;
+
+        if (container.scrollTop >= posisiMaksimal - 2) {
+
+            autoScrollSuratAktif = false;
+
+            clearInterval(autoScrollSuratTimer);
+            autoScrollSuratTimer = null;
+
+            tombol.innerHTML =
+                '<i data-lucide="play" class="w-4 h-4 fill-current"></i>';
+
+            lucide.createIcons();
+
+            return;
+        }
+
+        container.scrollTop += 1;
+
+    }, 80);
+}
+function togglePembukaSurat() {
+    const pembuka = document.getElementById('pembuka-surat');
+
+    if (!pembuka) return;
+
+    pembuka.classList.toggle('hidden');
+}
+
+function tutupDetailAlQuran() {
+
+    const modal = document.getElementById(
+        'alquran-detail-modal'
+    );
+
+    if (modal) {
+        modal.classList.add(
+            'invisible',
+            'opacity-0'
+        );
+    }
+
+    document.body.style.overflow = 'hidden';
+window.history.back();
+}
+function toggleTafsirAyat(nomorAyat) {
+
+    const tafsir = document.getElementById(
+        'tafsir-ayat-' + nomorAyat
+    );
+
+    if (!tafsir) return;
+
+    tafsir.classList.toggle('hidden');
+
+}
+async function pilihJenisTafsir(nomorAyat, jenis) {
+
+    const isi = document.getElementById(
+        'isi-tafsir-' + nomorAyat
+    );
+
+    if (!isi) return;
+
+    const data = window.dataTafsirAyat?.[nomorAyat];
+
+    if (!data) {
+        isi.textContent = 'Tafsir tidak tersedia.';
+        return;
+    }
+
+    // Tombol
+    const tombolShort = document.getElementById(
+        'tafsir-short-' + nomorAyat
+    );
+
+    const tombolLong = document.getElementById(
+        'tafsir-long-' + nomorAyat
+    );
+
+    // Reset warna kedua tombol
+    if (tombolShort) {
+        tombolShort.classList.remove(
+            'bg-amber-200',
+            'text-amber-800'
+        );
+
+        tombolShort.classList.add(
+            'bg-slate-100',
+            'text-slate-600'
+        );
+    }
+
+    if (tombolLong) {
+        tombolLong.classList.remove(
+            'bg-amber-200',
+            'text-amber-800'
+        );
+
+        tombolLong.classList.add(
+            'bg-slate-100',
+            'text-slate-600'
+        );
+    }
+
+    // =========================
+    // TAFSIR SINGKAT
+    // =========================
+    if (jenis === 'short') {
+
+        if (tombolShort) {
+            tombolShort.classList.remove(
+                'bg-slate-100',
+                'text-slate-600'
+            );
+
+            tombolShort.classList.add(
+                'bg-amber-200',
+                'text-amber-800'
+            );
+        }
+
+        isi.textContent =
+            data.short || 'Tafsir singkat tidak tersedia.';
+
+        return;
+    }
+
+    // =========================
+    // TAFSIR LENGKAP
+    // =========================
+
+    if (tombolLong) {
+        tombolLong.classList.remove(
+            'bg-slate-100',
+            'text-slate-600'
+        );
+
+        tombolLong.classList.add(
+            'bg-amber-200',
+            'text-amber-800'
+        );
+    }
+
+    // Simpan teks sebelumnya
+const teksSebelumnya = isi.textContent;
+    try {
+
+        const response = await fetch(
+            'https://api.myquran.com/v3/quran/' +
+            data.surah +
+            '/' +
+            nomorAyat,
+            {
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }
+        );
+
+        const result = await response.json();
+
+        if (
+            !response.ok ||
+            !result.status ||
+            !result.data
+        ) {
+            throw new Error(
+                result.message || 'Tafsir lengkap tidak ditemukan'
+            );
+        }
+
+        const tafsirLengkap =
+            result.data.tafsir?.kemenag?.long || '';
+
+        isi.textContent =
+            tafsirLengkap ||
+            data.short ||
+            'Tafsir lengkap tidak tersedia.';
+
+    } catch (error) {
+
+        console.error(
+            'Gagal memuat tafsir lengkap:',
+            error
+        );
+
+        isi.textContent =
+    teksSebelumnya ||
+    data.short ||
+    'Tafsir lengkap tidak tersedia.';
+
+
+    }
+}
+function putarAudioSurah(nomor, audioUrl) {
+
+    let audio = document.getElementById('audio-surah-' + nomor);
+
+    if (!audio) {
+
+        audio = document.createElement('audio');
+
+        audio.id = 'audio-surah-' + nomor;
+        audio.src = audioUrl;
+        audio.preload = 'none';
+
+        document.body.appendChild(audio);
+    }
+
+    if (audio.paused) {
+        audio.play();
+    } else {
+        audio.pause();
+    }
+}
+function putarAudioAyat(nomorAyat) {
+    const audio = document.getElementById('audio-ayat-' + nomorAyat);
+    const tombol = document.getElementById('tombol-audio-' + nomorAyat);
+
+    if (!audio || !tombol) return;
+
+    if (audio.paused) {
+        audio.play();
+        tombol.innerHTML = `
+            <i data-lucide="pause" class="w-4 h-4 fill-current"></i>
+        `;
+    } else {
+        audio.pause();
+        tombol.innerHTML = `
+            <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+        `;
+    }
+
+    lucide.createIcons();
+}
+document.addEventListener('ended', function(event) {
+    if (!event.target.id.startsWith('audio-ayat-')) return;
+
+    const nomorAyat = event.target.id.replace('audio-ayat-', '');
+    const tombol = document.getElementById('tombol-audio-' + nomorAyat);
+
+    if (!tombol) return;
+
+    tombol.innerHTML = `
+        <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+    `;
+
+    lucide.createIcons();
+}, true);
+function ubahModeBacaan(mode) {
+
+    const terjemahan = document.querySelectorAll('.terjemahan-ayat');
+
+    const tombolArab = document.querySelector(
+        'button[onclick="ubahModeBacaan(\'arab\')"]'
+    );
+
+    const tombolLengkap = document.querySelector(
+        'button[onclick="ubahModeBacaan(\'lengkap\')"]'
+    );
+
+    if (mode === 'arab') {
+
+        // Sembunyikan arti
+        terjemahan.forEach(function(el) {
+            el.classList.add('hidden');
+        });
+
+        // Arab Saja = hijau
+        tombolArab.classList.remove(
+            'bg-slate-100',
+            'text-slate-700'
+        );
+
+        tombolArab.classList.add(
+            'bg-emerald-600',
+            'text-white'
+        );
+
+        // Arab + Arti = abu-abu
+        tombolLengkap.classList.remove(
+            'bg-emerald-600',
+            'text-white'
+        );
+
+        tombolLengkap.classList.add(
+            'bg-slate-100',
+            'text-slate-700'
+        );
+
+    } else {
+
+        // Tampilkan arti
+        terjemahan.forEach(function(el) {
+            el.classList.remove('hidden');
+        });
+
+        // Arab + Arti = hijau
+        tombolLengkap.classList.remove(
+            'bg-slate-100',
+            'text-slate-700'
+        );
+
+        tombolLengkap.classList.add(
+            'bg-emerald-600',
+            'text-white'
+        );
+
+        // Arab Saja = abu-abu
+        tombolArab.classList.remove(
+            'bg-emerald-600',
+            'text-white'
+        );
+
+        tombolArab.classList.add(
+            'bg-slate-100',
+            'text-slate-700'
+        );
+
+    }
+
+}
+async function bukaDetailHadis(id) {
+
+    const modal = document.getElementById('detail-hadis-modal');
+    const container = document.getElementById('isi-detail-hadis');
+    const judul = document.getElementById('detail-hadis-id');
+
+    if (!modal || !container) return;
+
+    modal.classList.remove('invisible', 'opacity-0');
+    document.body.style.overflow = 'hidden';
+
+    if (judul) {
+        judul.textContent = 'Hadis #' + id;
+    }
+
+    container.innerHTML = `
+        <div class="text-center py-10">
+            <div class="inline-block w-7 h-7 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
+
+            <p class="text-white/50 text-xs mt-3">
+                Memuat detail hadis...
+            </p>
+        </div>
+    `;
+
+    lucide.createIcons();
+
+    try {
+
+        const response = await fetch(
+            'https://api.myquran.com/v3/hadis/enc/show/' + id,
+            {
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error('Gagal mengambil detail hadis');
+        }
+
+        const result = await response.json();
+
+        if (
+            !result.status ||
+            !result.data
+        ) {
+            throw new Error(
+                result.message || 'Data hadis tidak ditemukan'
+            );
+        }
+
+        const h = result.data;
+
+        container.innerHTML = `
+
+            <!-- Nomor Hadis -->
+          <div class="bg-white rounded-3xl p-6 shadow-xl w-full">
+                <div class="flex items-center justify-between">
+
+                    <div class="text-[10px] font-black text-emerald-600 uppercase tracking-wider">
+                        HADIS #${h.id}
+                    </div>
+
+                    ${
+                        h.grade
+                        ? `
+                            <div class="bg-emerald-50 text-emerald-700 px-3 py-1.5 rounded-xl text-[9px] font-black uppercase">
+                                ${h.grade}
+                            </div>
+                        `
+                        : ''
+                    }
+
+                </div>
+
+                <!-- Arab -->
+                <div
+                    dir="rtl"
+                    class="mt-6 text-right text-[25px] leading-[2.2] text-slate-800 break-words"
+                    style="font-family: 'Amiri', 'Scheherazade New', serif;">
+                    ${h.text?.ar || ''}
+                </div>
+
+                <!-- Garis -->
+                <div class="h-px bg-slate-100 my-6"></div>
+
+                <!-- Terjemahan -->
+                <div>
+
+                    <div class="text-[10px] font-black text-emerald-600 uppercase tracking-wider mb-3">
+                        Terjemahan
+                    </div>
+
+             <p class="text-[15px] leading-8 text-slate-700 break-words">
+                        ${h.text?.id || ''}
+                    </p>
+
+                </div>
+
+                ${
+                    h.takhrij
+                    ? `
+                        <div class="mt-7 pt-5 border-t border-slate-100">
+
+                            <div class="text-[10px] font-black text-emerald-600 uppercase tracking-wider mb-2">
+                                Takhrij
+                            </div>
+
+                            <p class="text-sm leading-6 text-slate-600">
+                                ${h.takhrij}
+                            </p>
+
+                        </div>
+                    `
+                    : ''
+                }
+
+                ${
+                    h.hikmah
+                    ? `
+                        <div class="mt-6 pt-5 border-t border-slate-100">
+
+                            <div class="text-[10px] font-black text-emerald-600 uppercase tracking-wider mb-2">
+                                Hikmah
+                            </div>
+
+                            <p class="text-sm leading-7 text-slate-600">
+                                ${h.hikmah}
+                            </p>
+
+                        </div>
+                    `
+                    : ''
+                }
+
+            </div>
+
+ <!-- Navigasi Hadis -->
+<div class="grid grid-cols-2 gap-3 mt-4">
+
+    ${
+        h.prev
+        ? `
+            <button
+                type="button"
+                onclick="bukaDetailHadis(${h.prev})"
+                class="bg-white rounded-2xl p-4 text-left active:scale-95 transition">
+
+                <div class="text-[9px] text-slate-400 font-black uppercase">
+                    Hadis Sebelumnya
+                </div>
+
+                <div class="text-sm font-black text-slate-700 mt-1">
+                    #${h.prev}
+                </div>
+
+            </button>
+        `
+        : ''
+    }
+
+    ${
+        h.next
+        ? `
+            <button
+                type="button"
+                onclick="bukaDetailHadis(${h.next})"
+                class="bg-white rounded-2xl p-4 text-right active:scale-95 transition">
+
+                <div class="text-[9px] text-slate-400 font-black uppercase">
+                    Hadis Berikutnya
+                </div>
+
+                <div class="text-sm font-black text-slate-700 mt-1">
+                    #${h.next}
+                </div>
+
+            </button>
+        `
+        : ''
+    }
+
+</div>
+        `;
+
+        lucide.createIcons();
+
+    } catch (error) {
+
+        console.error('Gagal memuat detail hadis:', error);
+
+        container.innerHTML = `
+            <div class="bg-red-50 rounded-3xl p-6 text-center">
+
+                <i
+                    data-lucide="wifi-off"
+                    class="w-8 h-8 mx-auto text-red-500 mb-3">
+                </i>
+
+                <p class="text-sm font-black text-red-600">
+                    Gagal memuat hadis
+                </p>
+
+                <p class="text-xs text-red-400 mt-2">
+                    ${error.message || 'Terjadi kesalahan.'}
+                </p>
+
+                <button
+                    onclick="bukaDetailHadis(${id})"
+                    class="mt-5 px-5 py-2.5 bg-red-500 text-white rounded-xl text-xs font-black">
+                    Coba Lagi
+                </button>
+
+            </div>
+        `;
+
+        lucide.createIcons();
+    }
+}
+
+
+function tutupDetailHadis() {
+
+    const modal = document.getElementById(
+        'detail-hadis-modal'
+    );
+
+    if (modal) {
+        modal.classList.add(
+            'invisible',
+            'opacity-0'
+        );
+    }
+
+    document.body.style.overflow = 'hidden';
+}
+let halamanHadis = 1;
+let tampilanAlQuran = 'surat';
+// =====================================================
+// NAVIGASI PERPUSTAKAAN
+// =====================================================
+
+history.replaceState(
+    { halaman: 'perpustakaan' },
+    '',
+    window.location.href
+);
+
+window.addEventListener('popstate', function (event) {
+
+    const halaman = event.state?.halaman;
+
+    // ===============================
+    // KEMBALI KE AL-QUR'AN
+    // ===============================
+    if (halaman === 'alquran') {
+
+        const detail = document.getElementById(
+            'alquran-detail-modal'
+        );
+
+        if (detail) {
+            detail.classList.add(
+                'invisible',
+                'opacity-0'
+            );
+        }
+
+        bukaHalamanAlQuran();
+        return;
+    }
+
+    // ===============================
+    // KEMBALI KE HADIS
+    // ===============================
+    if (halaman === 'hadis') {
+
+        const detail = document.getElementById(
+            'detail-hadis-modal'
+        );
+
+        if (detail) {
+            detail.classList.add(
+                'invisible',
+                'opacity-0'
+            );
+        }
+
+        bukaHalamanHadis();
+        return;
+    }
+
+    // ===============================
+    // KEMBALI KE PERPUSTAKAAN
+    // ===============================
+    if (halaman === 'perpustakaan') {
+
+        const detailQuran = document.getElementById(
+            'alquran-detail-modal'
+        );
+
+        const detailHadis = document.getElementById(
+            'detail-hadis-modal'
+        );
+
+        const quran = document.getElementById(
+            'alquran-modal'
+        );
+
+        const hadis = document.getElementById(
+            'hadis-modal'
+        );
+
+        if (detailQuran) {
+            detailQuran.classList.add(
+                'invisible',
+                'opacity-0'
+            );
+        }
+
+        if (detailHadis) {
+            detailHadis.classList.add(
+                'invisible',
+                'opacity-0'
+            );
+        }
+
+        if (quran) {
+            quran.classList.add(
+                'invisible',
+                'opacity-0'
+            );
+        }
+
+        if (hadis) {
+            hadis.classList.add(
+                'invisible',
+                'opacity-0'
+            );
+        }
+
+        bukaPerpustakaanDigital();
+        return;
+    }
+
+});
+async function muatDaftarHadis() {
+    const container = document.getElementById('daftar-hadis');
+
+    if (!container) return;
+
+    container.innerHTML = `
+        <div class="text-center py-10">
+            <div class="inline-block w-7 h-7 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
+            <p class="text-white/50 text-xs mt-3">
+                Memuat koleksi hadis...
+            </p>
+        </div>
+    `;
+
+    try {
+        const response = await fetch(
+            `https://api.myquran.com/v3/hadis/enc/explore?page=${halamanHadis}&limit=10`,
+            {
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error('Gagal mengambil data hadis');
+        }
+
+        const result = await response.json();
+
+        if (
+            !result.status ||
+            !result.data ||
+            !Array.isArray(result.data.hadis)
+        ) {
+            throw new Error('Format data hadis tidak sesuai');
+        }
+
+        const hadis = result.data.hadis;
+const paging = result.data.paging;
+
+        if (hadis.length === 0) {
+            container.innerHTML = `
+                <div class="text-center py-10">
+                    <p class="text-white/50 text-sm">
+                        Belum ada data hadis.
+                    </p>
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = hadis.map(h => `
+    <button
+        onclick="bukaDetailHadis(${h.id})"
+        class="w-full text-left bg-white rounded-2xl p-5 shadow-lg active:scale-[0.98] transition">
+
+        <div class="flex items-start justify-between gap-3">
+
+            <div class="flex-1 min-w-0">
+
+                <div class="text-[10px] font-black text-emerald-600 uppercase tracking-wider">
+                    HADIS #${h.id}
+                </div>
+
+                <!-- ARAB -->
+                <div
+                    dir="rtl"
+                    class="mt-4 text-right text-[21px] leading-[2] font-medium text-slate-800"
+                    style="font-family: 'Amiri', 'Scheherazade New', serif;">
+                    ${h.text?.ar || ''}
+                </div>
+
+                <!-- TERJEMAHAN INDONESIA -->
+                <div class="mt-4 text-sm leading-7 text-slate-600">
+                    ${h.text?.id || ''}
+                </div>
+
+                <!-- DERAJAT -->
+                ${
+                    h.grade
+                    ? `
+                        <div class="mt-4 inline-flex items-center gap-1 bg-emerald-50 text-emerald-700 px-3 py-1.5 rounded-lg text-[9px] font-black uppercase">
+                            ${h.grade}
+                        </div>
+                    `
+                    : ''
+                }
+
+                <!-- TAKHRIJ -->
+                ${
+                    h.takhrij
+                    ? `
+                        <div class="mt-2 text-[10px] text-slate-400 font-medium">
+                            ${h.takhrij}
+                        </div>
+                    `
+                    : ''
+                }
+
+            </div>
+
+           
+
+        </div>
+
+    </button>
+`).join('');
+        lucide.createIcons();
+
+const pagination = document.createElement('div');
+
+pagination.className =
+    'flex items-center justify-between gap-3 mt-4 mb-6';
+
+pagination.innerHTML = `
+    <button
+        type="button"
+        ${paging.has_prev
+            ? `onclick="halamanHadis = ${paging.prev_page}; muatDaftarHadis()"`
+            : 'disabled'}
+        class="flex-1 py-3 rounded-xl bg-white text-slate-700 text-xs font-black
+        ${!paging.has_prev ? 'opacity-40 cursor-not-allowed' : 'active:scale-95'}">
+        ← Sebelumnya
+    </button>
+
+    <div class="px-4 py-3 rounded-xl bg-white/10 text-white text-xs font-black whitespace-nowrap">
+        ${paging.current} / ${paging.total_pages}
+    </div>
+
+    <button
+        type="button"
+        ${paging.has_next
+            ? `onclick="halamanHadis = ${paging.next_page}; muatDaftarHadis()"`
+            : 'disabled'}
+        class="flex-1 py-3 rounded-xl bg-emerald-600 text-white text-xs font-black
+        ${!paging.has_next ? 'opacity-40 cursor-not-allowed' : 'active:scale-95'}">
+        Berikutnya →
+    </button>
+`;
+
+container.appendChild(pagination);
+    } catch (error) {
+
+        console.error('Gagal memuat hadis:', error);
+
+        container.innerHTML = `
+            <div class="bg-red-50 rounded-2xl p-5 text-center">
+                <i
+                    data-lucide="wifi-off"
+                    class="w-7 h-7 mx-auto text-red-500 mb-3">
+                </i>
+
+                <p class="text-sm font-black text-red-600">
+                    Gagal memuat hadis
+                </p>
+
+                <p class="text-xs text-red-400 mt-1">
+                    Periksa koneksi internet kemudian coba lagi.
+                </p>
+
+                <button
+                    onclick="muatDaftarHadis()"
+                    class="mt-4 px-4 py-2 bg-red-500 text-white rounded-xl text-xs font-black">
+                    Coba Lagi
+                </button>
+            </div>
+        `;
+
+        lucide.createIcons();
+    }
+}
+let timerPencarianHadis = null;
+
+async function cariHadis(keyword) {
+
+    const container = document.getElementById('daftar-hadis');
+
+    if (!container) return;
+
+    keyword = keyword.trim();
+
+    // Jika kosong, kembali ke daftar awal
+    if (!keyword) {
+        muatDaftarHadis();
+        return;
+    }
+
+    // API membutuhkan minimal 4 karakter
+    if (keyword.length < 4) {
+        container.innerHTML = `
+            <div class="bg-white rounded-2xl p-6 text-center">
+                <i
+                    data-lucide="search"
+                    class="w-7 h-7 mx-auto text-slate-300 mb-3">
+                </i>
+
+                <p class="text-sm font-black text-slate-700">
+                    Masukkan minimal 4 karakter
+                </p>
+
+                <p class="text-xs text-slate-400 mt-1">
+                    Contoh: kiamat, sabar, sholat
+                </p>
+            </div>
+        `;
+
+        lucide.createIcons();
+        return;
+    }
+
+    container.innerHTML = `
+        <div class="text-center py-10">
+            <div class="inline-block w-7 h-7 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
+
+            <p class="text-white/50 text-xs mt-3">
+                Mencari hadis...
+            </p>
+        </div>
+    `;
+
+    try {
+
+        const url =
+            'https://api.myquran.com/v3/hadis/enc/cari/' +
+            encodeURIComponent(keyword) +
+            '?page=1&limit=10';
+
+        const response = await fetch(url, {
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+
+        const result = await response.json();
+
+        if (!response.ok || !result.status) {
+            throw new Error(
+                result.message || 'Pencarian hadis gagal'
+            );
+        }
+
+        const hadis = result.data?.hadis || [];
+
+        if (hadis.length === 0) {
+
+            container.innerHTML = `
+                <div class="bg-white rounded-2xl p-6 text-center">
+
+                    <i
+                        data-lucide="search-x"
+                        class="w-8 h-8 mx-auto text-slate-300 mb-3">
+                    </i>
+
+                    <p class="text-sm font-black text-slate-700">
+                        Hadis tidak ditemukan
+                    </p>
+
+                    <p class="text-xs text-slate-400 mt-1">
+                        Coba gunakan kata kunci lain.
+                    </p>
+
+                </div>
+            `;
+
+            lucide.createIcons();
+            return;
+        }
+
+        container.innerHTML = `
+            <div class="mb-2 px-1">
+                <p class="text-white/50 text-[10px] font-black uppercase tracking-wider">
+                    Hasil pencarian: ${keyword}
+                </p>
+            </div>
+
+            ${hadis.map(h => `
+
+                <button
+                    onclick="bukaDetailHadis(${h.id})"
+                    class="w-full text-left bg-white rounded-2xl p-5 shadow-lg active:scale-[0.98] transition">
+
+                    <div class="flex items-start gap-3">
+
+                        <div class="flex-1 min-w-0">
+
+                            <div class="text-[10px] font-black text-emerald-600 uppercase tracking-wider">
+                                HADIS #${h.id}
+                            </div>
+
+                            <p class="mt-3 text-sm leading-7 text-slate-700">
+                                ${h.text || ''}
+                            </p>
+
+                            ${
+                                h.focus && h.focus.length
+                                ? `
+                                    <div class="mt-3 pt-3 border-t border-slate-100">
+
+                                        <div class="text-[9px] font-black text-slate-400 uppercase mb-1">
+                                            Bagian yang cocok
+                                        </div>
+
+                                        <p class="text-xs leading-6 text-slate-500">
+                                            ${h.focus[0]}
+                                        </p>
+
+                                    </div>
+                                `
+                                : ''
+                            }
+
+                        </div>
+
+                        <i
+                            data-lucide="chevron-right"
+                            class="w-5 h-5 text-slate-400 shrink-0 mt-1">
+                        </i>
+
+                    </div>
+
+                </button>
+
+            `).join('')}
+        `;
+
+        lucide.createIcons();
+
+    } catch (error) {
+
+        console.error('Pencarian hadis:', error);
+
+        container.innerHTML = `
+            <div class="bg-red-50 rounded-2xl p-6 text-center">
+
+                <i
+                    data-lucide="wifi-off"
+                    class="w-8 h-8 mx-auto text-red-500 mb-3">
+                </i>
+
+                <p class="text-sm font-black text-red-600">
+                    Pencarian gagal
+                </p>
+
+                <p class="text-xs text-red-400 mt-2">
+                    ${error.message || 'Terjadi kesalahan.'}
+                </p>
+
+                <button
+                    onclick="cariHadis('${keyword.replace(/'/g, "\\'")}')"
+                    class="mt-4 px-5 py-2.5 bg-red-500 text-white rounded-xl text-xs font-black">
+                    Coba Lagi
+                </button>
+
+            </div>
+        `;
+
+        lucide.createIcons();
+    }
+}
+document.addEventListener('DOMContentLoaded', function () {
+
+    const input = document.getElementById('pencarian-hadis');
+
+    if (!input) return;
+
+    input.addEventListener('input', function () {
+
+        clearTimeout(timerPencarianHadis);
+
+        const keyword = this.value;
+
+        timerPencarianHadis = setTimeout(function () {
+            cariHadis(keyword);
+        }, 600);
+
+    });
+
+});
+</script>
+
+    <script>
+        // Perpustakaan Digital dipisahkan dari index.html.
+        document.addEventListener('DOMContentLoaded', function () {
+            bukaPerpustakaanDigital();
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>
